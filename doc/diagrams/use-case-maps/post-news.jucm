@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<urn:URNspec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ucm.map="http:///ucm/map.ecore" xmlns:urn="http:///urn.ecore" name="URNspec" author="clomagno" created="April 1, 2015 10:12:52 AM ART" modified="April 1, 2015 10:45:09 AM ART" specVersion="5" urnVersion="1.27" nextGlobalID="242">
+<urn:URNspec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ucm.map="http:///ucm/map.ecore" xmlns:urn="http:///urn.ecore" name="URNspec" author="clomagno" created="April 1, 2015 10:12:52 AM ART" modified="April 1, 2015 11:10:50 AM ART" specVersion="7" urnVersion="1.27" nextGlobalID="242">
   <ucmspec>
     <scenarioGroups name="ScenarioGroup5" id="5">
       <scenarios name="ScenarioDef6" id="6"/>
@@ -21,7 +21,7 @@
     <responsibilities name="generateImageIds" id="160" respRefs="161"/>
     <responsibilities name="generateNewsEntity" id="225" respRefs="226"/>
     <responsibilities name="persistNewsEntity" id="231" respRefs="232"/>
-    <responsibilities name="publish" id="235" respRefs="236 238 240"/>
+    <responsibilities name="publishNews" id="235" respRefs="236 238 240"/>
     <responsibilities name="Responsibility237" id="237"/>
     <responsibilities name="Responsibility239" id="239"/>
     <specDiagrams xsi:type="ucm.map:UCMmap" name="UCMmap2" id="2">
@@ -155,6 +155,7 @@
       <connections xsi:type="ucm.map:NodeConnection" source="236" target="217"/>
       <connections xsi:type="ucm.map:NodeConnection" source="238" target="220"/>
       <connections xsi:type="ucm.map:NodeConnection" source="240" target="213"/>
+      <comments description="Composite" x="471" y="513" width="100" height="35" fillColor="255,255,200"/>
     </specDiagrams>
     <components name="NewsController" id="12" contRefs="13"/>
     <components name="ImagesProvider" id="16" contRefs="17"/>

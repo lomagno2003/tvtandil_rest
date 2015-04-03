@@ -16,4 +16,12 @@ class Image extends Media {
 	public function setUrl($url) {
 		$this->url = $url;
 	}
+	
+	public function jsonSerialize()
+	{
+		$result = parent::jsonSerialize();
+		$result['url'] = $this->url;
+			
+		return $result;
+	}
 }

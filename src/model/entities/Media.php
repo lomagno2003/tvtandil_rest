@@ -1,6 +1,7 @@
 <?php
 
 namespace tvtandil\model\entities;
+use JsonSerializable;
 
 /**
  * @Entity @Table(name="media")
@@ -8,7 +9,7 @@ namespace tvtandil\model\entities;
  * @DiscriminatorColumn(name="discr", type="string")
  * @DiscriminatorMap({"media" = "Media", "image" = "Image"})
  */
-class Media {
+class Media implements JsonSerializable {
 	/**
 	 * @Id @Column(type="integer") @GeneratedValue
 	 */
@@ -35,5 +36,15 @@ class Media {
 	}
 	public function setNews($news){
 		$this->news = $news;
+	}
+	
+	public function jsonSerialize()
+	{
+		$result = array(
+				'id' => $this->getId(),
+				'epigraph' => $this->getEpigraph()
+		);
+			
+		return $result;
 	}
 }

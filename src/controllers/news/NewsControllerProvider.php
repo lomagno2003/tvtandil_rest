@@ -9,6 +9,7 @@ use tvtandil\model\entities\News;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use tvtandil\model\entities\tvtandil\model\entities;
+use tvtandil\common\images\ImageFactory;
 
 class NewsControllerProvider implements ControllerProviderInterface {
 	public function connect(Application $app) {
@@ -29,14 +30,30 @@ class NewsControllerProvider implements ControllerProviderInterface {
 			return $app ['serializer']->serialize ( $result, 'json' );
 		} );
 		
+		$controllers->get ( '/{id}', function (Application $app, $id) {			
+			$newsRepository = $app ['orm.em']->getRepository ( 'tvtandil\model\entities\News' );
+			$news = $newsRepository->find ( $id );
+			
+			//TODO Corregir circular reference exception
+			return $app ['serializer']->serialize ( $news, 'json' );
+		} );
+		
 		$controllers->post ( '/', function (Application $app, Request $request) {
 			$data = json_decode ( $request->getContent (), true );
 			
-			$explodedData = explode(',', $data['file']);
-			$fileData = base64_decode($explodedData[1]);
-			file_put_contents('./test.json', $fileData);
-			
 			$news = new News ();
+
+			if ($data ['media']) {
+				foreach ( $data ['media'] as $media ) {
+					if ($media ['type'] == 'NEW_IMAGE') {
+						$imageFactory = new ImageFactory ();
+						$image = $imageFactory->create ( $app, $media );
+						$image->setNews($news);
+						
+					}
+				}
+			}
+			
 			
 			$news->setTitle ( $data ['title'] );
 			$app ['orm.em']->persist ( $news );
@@ -61,7 +78,7 @@ class NewsControllerProvider implements ControllerProviderInterface {
 			$newsRepository = $app ['orm.em']->getRepository ( 'tvtandil\model\entities\News' );
 			$news = $newsRepository->find ( $id );
 			
-			$app ['orm.em']->remove($news);
+			$app ['orm.em']->remove ( $news );
 			$app ['orm.em']->flush ();
 			return new Response ( 200 );
 		} );

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/constants.php';
 
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use Silex\Application;
@@ -36,8 +37,10 @@ $app->register(new DoctrineOrmServiceProvider, array(
 								"path" => __DIR__."../src",
 						)
 				)
-		)
+		),
+		"orm.proxies_dir" => "../cache/doctrine/proxies"
 ));
+// $app ['orm.em']->setProxyDir(__DIR__ . "../cache/doctrine/proxies");
 
 $app->register(new SerializerServiceProvider());
 

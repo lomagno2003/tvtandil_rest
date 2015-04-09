@@ -20,10 +20,8 @@ class ImagesControllerProvider implements ControllerProviderInterface {
 			$image = $imageRepository->find ( $id );
 			
 			if ($image === null) {
-				return new Response ( 404 );
-			} else {
-				ob_end_clean();
-				
+				return $app->abort( 404 );
+			} else {				
 				$path = 'images/' . $image->getId() . '.jpg';
 				
 				return $app->sendFile($path, 200, array('Content-Type' => 'image/jpg'));

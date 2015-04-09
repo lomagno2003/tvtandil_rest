@@ -20,7 +20,7 @@ class ImageFactory{
 		file_put_contents($path, $imageData);
 		
 		//TODO Configurar path
-		$newImage->setUrl($path);
+		$newImage->setUrl(APP_BASE_URL . 'images/' . $newImage->getId());
 		
 		$app['orm.em']->persist ( $newImage );
 		$app['orm.em']->flush ();

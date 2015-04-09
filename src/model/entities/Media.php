@@ -6,7 +6,7 @@ use JsonSerializable;
 /**
  * @Entity @Table(name="media")
  * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="discr", type="string")
+ * @DiscriminatorColumn(name="type", type="string")
  * @DiscriminatorMap({"media" = "Media", "image" = "Image"})
  */
 class Media implements JsonSerializable {

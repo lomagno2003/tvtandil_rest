@@ -21,7 +21,7 @@ class Image extends Media {
 	{
 		$result = parent::jsonSerialize();
 		$result['url'] = $this->url;
-			
+
 		return $result;
 	}
 }

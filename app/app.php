@@ -42,5 +42,6 @@ $app->register(new DoctrineOrmServiceProvider, array(
 $app->register(new SerializerServiceProvider());
 
 $app->mount('/news', new tvtandil\controllers\news\NewsControllerProvider());
+$app->mount('/images', new tvtandil\controllers\images\ImagesControllerProvider());
 
 return $app;

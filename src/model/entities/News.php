@@ -25,13 +25,14 @@ class News implements JsonSerializable{
 	protected $description;
 	
 	/**
-	 * @OneToMany(targetEntity="Media", mappedBy="news")
+	 * @OneToMany(targetEntity="Media", mappedBy="news", cascade={"remove"})
 	 */
 	protected $media;
 	
 	/**
-	 * @OneToMany(targetEntity="SocialMediaReference", mappedBy="news")
-	 */
+     * @OneToOne(targetEntity="SocialMediaReference")
+     * @JoinColumn(name="social_media_reference", referencedColumnName="id")
+     **/
 	protected $socialMediaReference;
 	
 	/**
@@ -60,6 +61,12 @@ class News implements JsonSerializable{
 	}
 	public function getMedia() {
 		return $this->media;
+	}
+	public function setSocialMediaReference(SocialMediaReference $socialMediaReference){
+		$this->socialMediaReference = $socialMediaReference;
+	}
+	public function getSocialMediaReference(){
+		return $this->socialMediaReference;
 	}
 	public function getLabels() {
 		return $this->labels;

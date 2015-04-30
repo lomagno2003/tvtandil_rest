@@ -7,20 +7,33 @@ namespace tvtandil\model\entities;
  */
 class SocialMediaReference{
 	/**
-	 * @Id @Column(type="string")
+	 * @Id @Column(type="integer") @GeneratedValue
 	 */
 	protected $id;
 	
 	/**
-	 * @ManyToOne(targetEntity="News", inversedBy="socialMediaReference")
-	 * @JoinColumn(name="news_id", referencedColumnName="id")
-	 **/
-	protected $news;
+	 * @Column(type="string", nullable=true)
+	 */
+	protected $facebookPostId;
+	
+	/**
+	 * @Column(type="string", nullable=true)
+	 */
+	protected $twitterPostId;
 	
 	public function getId() {
 		return $this->id;
 	}
-	public function getNews() {
-		return $this->news;
+	public function setFacebookPostId($facebookPostId){
+		$this->facebookPostId = $facebookPostId;
+	}
+	public function getFacebookPostId(){
+		return $this->facebookPostId;
+	}
+	public function setTwitterPostId($twitterPostId){
+		$this->twitterPostId = $twitterPostId;
+	}
+	public function getTwitterPostId(){
+		return $this->twitterPostId;
 	}
 }

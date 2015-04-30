@@ -13,9 +13,17 @@ use tvtandil\common\images\ImageFactory;
 use tvtandil\common\socialmedia\TwitterAdapter;
 use tvtandil\model\entities\SocialMediaReference;
 use tvtandil\common\socialmedia\FacebookAdapter;
+use tvtandil\common\socialmedia\CompositeSocialMediaAdapter;
+use tvtandil\common\video\VideoFactory;
+use tvtandil\common\socialmedia\ISocialMediaAdapter;
+use tvtandil\common\socialmedia\tvtandil\common\socialmedia;
 
 class NewsControllerProvider implements ControllerProviderInterface {
+	private $socialMediaAdapter;
+
 	public function connect(Application $app) {
+		$this->socialMediaAdapter = new CompositeSocialMediaAdapter(new TwitterAdapter($app));
+		
 		// creates a new controller based on the default route
 		$controllers = $app ['controllers_factory'];
 		
@@ -68,12 +76,8 @@ class NewsControllerProvider implements ControllerProviderInterface {
 					}
 				}
 			}
-			
-// 			$twitterAdapter = new TwitterAdapter();
-// 			$twitterAdapter->post(new SocialMediaReference());
 
-// 			$facebookAdapter = new FacebookAdapter();
-// 			$facebookAdapter->post(new SocialMediaReference());
+			$this->socialMediaAdapter->post($news);
 			
 			$app ['orm.em']->persist ( $news );
 			$app ['orm.em']->flush ();
@@ -102,9 +106,12 @@ class NewsControllerProvider implements ControllerProviderInterface {
 			$newsRepository = $app ['orm.em']->getRepository ( 'tvtandil\model\entities\News' );
 			$news = $newsRepository->find ( $id );
 			
+			
 			if ($news === null) {
 				return new Response ( 404 );
 			} else {
+				$this->socialMediaAdapter->delete($news);
+				
 				$app ['orm.em']->remove ( $news );
 				$app ['orm.em']->flush ();
 				return new Response ( 200 );

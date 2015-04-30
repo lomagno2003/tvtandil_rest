@@ -6,7 +6,8 @@
 		"doctrine/orm": "2.4.7",
 		"php": ">=5.4.0",
     	"jublonet/codebird-php": "*",
-		"facebook/php-sdk-v4" : "4.0.*"
+		"facebook/php-sdk-v4" : "4.0.*",
+		"google/apiclient": "1.0.*@beta"
     },
     
     "autoload": {

@@ -17,6 +17,7 @@ use tvtandil\common\socialmedia\CompositeSocialMediaAdapter;
 use tvtandil\common\video\VideoFactory;
 use tvtandil\common\socialmedia\ISocialMediaAdapter;
 use tvtandil\common\socialmedia\tvtandil\common\socialmedia;
+use tvtandil\common\video\tvtandil\common\video;
 
 class NewsControllerProvider implements ControllerProviderInterface {
 	private $socialMediaAdapter;
@@ -67,12 +68,17 @@ class NewsControllerProvider implements ControllerProviderInterface {
 				}
 			}
 			
+			$app ['orm.em']->persist ( $news );
+			
 			if ($data ['media']) {
 				foreach ( $data ['media'] as $media ) {
 					if ($media ['type'] == 'NEW_IMAGE') {
 						$imageFactory = new ImageFactory ();
-						$image = $imageFactory->create ( $app, $media );
-						$image->setNews ( $news );
+						$image = $imageFactory->create ( $app, $media, $news );
+					}
+					if ($media ['type'] == 'UPLOADED_VIDEO') {
+						$videoFactory = new VideoFactory();
+						$video = $videoFactory->createFromUploadedVideo( $app, $media, $news );
 					}
 				}
 			}
@@ -82,7 +88,7 @@ class NewsControllerProvider implements ControllerProviderInterface {
 			$app ['orm.em']->persist ( $news );
 			$app ['orm.em']->flush ();
 			
-			return new Response ( 200 );
+			return new Response ( $news->getId(), 200 );
 		} );
 		
 		$controllers->put ( '/{id}', function (Application $app, Request $request, $id) {

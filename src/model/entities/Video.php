@@ -2,12 +2,10 @@
 
 namespace tvtandil\model\entities;
 
-use tvtandil\common\images\ImageFactory;
 /**
- * @Entity @Table(name="image")
- * @HasLifecycleCallbacks()
+ * @Entity @Table(name="video")
  */
-class Image extends Media {
+class Video extends Media {
 	/**
 	 * @Column(type="string", nullable=true) *
 	 */
@@ -19,19 +17,11 @@ class Image extends Media {
 		$this->url = $url;
 	}
 	
-	/**
-	 * @PreRemove
-	 */
-	public function deleteImageFile(){
-		$path = ImageFactory::getImagePath($this);
-		unlink($path);
-	}
-	
 	public function jsonSerialize()
 	{
 		$result = parent::jsonSerialize();
 		$result['url'] = $this->url;
-		$result['type'] = 'image';
+		$result['type'] = 'video';
 
 		return $result;
 	}

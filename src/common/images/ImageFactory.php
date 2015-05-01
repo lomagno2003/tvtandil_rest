@@ -10,9 +10,10 @@ class ImageFactory{
 		return 'images/' . $image->getId() . '.jpg';
 	}
 	
-	public function create(Application $app, $imageJSON){
+	public function create(Application $app, $imageJSON, $news){
 		$newImage = new Image();
 		$newImage->setEpigraph($imageJSON['epigraph']);
+		$newImage->setNews($news);
 		
 		$app['orm.em']->persist ( $newImage );
 		$app['orm.em']->flush ();
